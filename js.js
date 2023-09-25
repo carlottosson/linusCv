@@ -1,5 +1,6 @@
 const headerTemplate = document.querySelector("template");
 const pageEl = document.querySelector("[data-page]");
+const headerEl = document.querySelector("[data-header]");
 const nameEl = document.querySelector("[data-name]");
 const col1El = document.querySelector("[data-col1]");
 const col2El = document.querySelector("[data-col2]");
@@ -28,21 +29,21 @@ const sectionOne = (data) => {
   ].join("");
   return html;
 };
+const user = Math.floor(Math.random() * 100) + 1;
 
-fetch("https://dummyjson.com/users/1")
+fetch(`https://dummyjson.com/users/${user}`)
   .then(async (res) => {
     console.log(res);
     await new Promise((r) => setTimeout(r, 2000));
     return res.json();
   })
   .then((data) => {
-    const item = headerTemplate.content.cloneNode(true);
-    item.querySelector(
-      "[data-name]"
-    ).innerText = `${data.firstName} ${data.lastName}`;
-    item.querySelector("img").src = data.image;
-    pageEl.prepend(item);
+    const h1 = headerEl.querySelector("h1");
+    const h1Image = headerEl.querySelector("img");
 
+    h1.textContent = `${data.firstName} ${data.lastName}`;
+    h1Image.src = data.image;
+    pageEl.classList.remove("loading");
     pageEl.querySelector("[data-subTitle]").textContent = data.company.title;
 
     const firstSection = sectionOne(data);

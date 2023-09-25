@@ -13,11 +13,16 @@
   box-sizing: border-box;
 }
 
+body {
+  color: var(--cl-text-primary);
+}
+
 p {
   margin-bottom: 2rem;
 }
 
 h1 {
+  font-family: Impact, sans-serif;
   font-size: clamp(2rem, 8vw, 4rem);
   line-height: 0.85;
   margin-top: 3rem;
@@ -26,6 +31,8 @@ h1 {
   display: flex;
   align-items: center;
   position: relative;
+  max-width: 70%;
+  z-index: 1;
 }
 
 h2 {
@@ -96,6 +103,21 @@ img {
     filter: drop-shadow(40px -4px 0px var(--cl-img-bg));
   }
 }
+/* make .sub-heading opacity .2 if loading is on parent element */
+.loading:has(.sub-heading) .sub-heading,
+.loading:has(.top-img) .top-img,
+.loading:has(h1) h1 {
+  animation: load 1s infinite linear alternate;
+}
+
+@keyframes load {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
 
 header {
   display: flex;
@@ -122,6 +144,9 @@ header {
 .sub-heading {
   font-size: 1.5rem;
   font-weight: bold;
+  text-shadow: 0px 0px 6px var(--cl-bg);
+  z-index: 1;
+  isolation: isolate;
 }
 
 main {
